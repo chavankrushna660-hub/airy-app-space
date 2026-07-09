@@ -1435,26 +1435,30 @@ export default function App() {
     reader.readAsDataURL(file);
   };
 
-  const isMobile = windowSize.width < 1200;
+  const isScaledViewport = windowSize.width < 1200;
+  const isSmallMobile = windowSize.width < 768;
   const targetWidth = 1280;
-  const scale = isMobile ? windowSize.width / targetWidth : 1;
+  const scale = isScaledViewport ? windowSize.width / targetWidth : 1;
+  const mobileTopGap = isSmallMobile ? 120 : 0;
+  const mobileBottomGap = isSmallMobile ? 140 : 0;
+  const scaledViewportHeight = Math.max(windowSize.height - mobileTopGap - mobileBottomGap, 360);
 
   if (typeof window !== 'undefined') {
     (window as any).__appScale = scale;
   }
 
-  const containerStyle: React.CSSProperties = isMobile ? {
+  const containerStyle: React.CSSProperties = isScaledViewport ? {
     width: `${targetWidth}px`,
-    height: `${windowSize.height / scale}px`,
+    height: `${scaledViewportHeight / scale}px`,
     transform: `scale(${scale})`,
     transformOrigin: 'top left',
     position: 'absolute',
     left: 0,
-    top: 0,
+    top: mobileTopGap,
   } : {};
 
   return (
-    <div className="w-screen h-screen overflow-hidden bg-neutral-950 relative py-[100px] md:py-0 px-4 md:px-6">
+    <div className="w-screen h-screen overflow-hidden bg-neutral-950 relative">
       <div 
         style={containerStyle}
         className="flex flex-col h-full w-full bg-neutral-950 text-white font-sans text-sm antialiased overflow-hidden select-none"
