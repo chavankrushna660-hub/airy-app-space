@@ -1,24 +1,49 @@
 import { createFileRoute } from "@tanstack/react-router";
+import { lazy, Suspense, useEffect, useState } from "react";
 
-// No head() here: the home route inherits title/description/og/twitter from
-// __root.tsx, and ships no og:image so serve-time hosting can inject the
-// project's social preview (explicit og:image or latest screenshot).
+const AnimaStudio = lazy(() => import("@/animastudio/App"));
+
 export const Route = createFileRoute("/")({
+  head: () => ({
+    meta: [
+      { title: "AnimaStudio — Vector Rigging & Skeletal Animation" },
+      {
+        name: "description",
+        content:
+          "AnimaStudio: advanced vector-based 2D puppet rigging and skeletal animation suite with inverse kinematics and automation.",
+      },
+      { property: "og:title", content: "AnimaStudio" },
+      {
+        property: "og:description",
+        content:
+          "Vector-based 2D puppet rigging and skeletal animation studio.",
+      },
+    ],
+  }),
   component: Index,
 });
 
-// IMPORTANT: Replace this placeholder. See ./README.md for routing conventions.
 function Index() {
+  const [mounted, setMounted] = useState(false);
+  useEffect(() => setMounted(true), []);
+
   return (
-    <div
-      className="flex min-h-screen items-center justify-center"
-      style={{ backgroundColor: "#fcfbf8" }}
-    >
-      <img
-        data-lovable-blank-page-placeholder="REMOVE_THIS"
-        src="https://cdn.gpteng.co/blank-app-v1.svg"
-        alt="Your app will live here!"
-      />
+    <div className="min-h-screen w-full bg-neutral-950">
+      {mounted ? (
+        <Suspense
+          fallback={
+            <div className="flex min-h-screen items-center justify-center text-neutral-400">
+              Loading AnimaStudio…
+            </div>
+          }
+        >
+          <AnimaStudio />
+        </Suspense>
+      ) : (
+        <div className="flex min-h-screen items-center justify-center text-neutral-400">
+          Loading AnimaStudio…
+        </div>
+      )}
     </div>
   );
 }
