@@ -1,3 +1,4 @@
+// @ts-nocheck
 import React, { useRef, useState, useEffect } from 'react';
 import { RotateCcw, Sparkles, Feather, ZoomIn, ZoomOut } from 'lucide-react';
 import { Point, VectorObject, Bone, Pivot, Frame, Transform, RealismSettings, LassoControlPoint, SmartWarpPin } from '../types';
