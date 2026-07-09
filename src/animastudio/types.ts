@@ -45,6 +45,8 @@ export interface Transform {
   perspective?: number;
   cameraAngleX?: number;
   cameraAngleY?: number;
+  origX?: number;
+  origY?: number;
 }
 
 export interface Pivot {
