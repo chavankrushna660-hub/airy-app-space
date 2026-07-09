@@ -1453,7 +1453,7 @@ export default function App() {
   } : {};
 
   return (
-    <div className="w-screen h-screen overflow-hidden bg-neutral-950 relative">
+    <div className="w-screen h-screen overflow-hidden bg-neutral-950 relative py-10 md:py-14 px-4 md:px-6">
       <div 
         style={containerStyle}
         className="flex flex-col h-full w-full bg-neutral-950 text-white font-sans text-sm antialiased overflow-hidden select-none"
